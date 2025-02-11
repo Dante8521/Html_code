@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #ffcccc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin-top: 100px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #d00000;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        #yes {
+            background-color: #ff4081;
+            color: white;
+        }
+
+        #no {
+            background-color: #555;
+            color: white;
+            position: absolute;
+        }
+
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 50% 75%, 18% 100%, 0% 38%);
+            opacity: 0.6;
+            animation: float 4s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(1); opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Imagen que aparece al intentar presionar "No" */
+        .popup-image {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        /* Estilos para la pantalla final con la foto */
+        .final-screen {
+            display: none;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .final-screen img {
+            width: 300px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts"></div>
+    
+    <div class="container" id="main-container">
+        <h1>¿Quieres ser mi San Valentín? 💖</h1>
+        <div class="buttons">
+            <button id="yes" onclick="showLoveMessage()">Sí 💕</button>
+            <button id="no" onmouseover="moveNoButton()">No 😢</button>
+        </div>
+    </div>
+
+    <!-- Imagen que aparecerá cuando intente presionar "No" -->
+    <img src="imagen-divertida.jpeg" alt="No puedes decir que no" class="popup-image" id="popupImage">
+
+    <!-- Sección oculta con el mensaje final y la foto -->
+    <div class="final-screen" id="final-screen">
+        <h1>Ya sabia, jeje. Te amo 💖🥰</h1>
+        <img src="nosotros.jpeg" alt="Nosotros juntos">
+    </div>
+
+    <script>
+        function showLoveMessage() {
+            // Oculta la pantalla inicial
+            document.getElementById("main-container").style.display = "none";
+            // Muestra la pantalla final con el mensaje y la foto
+            document.getElementById("final-screen").style.display = "block";
+        }
+
+        function moveNoButton() {
+            let btn = document.getElementById("no");
+            let popup = document.getElementById("popupImage");
+
+            // Muestra la imagen en el centro
+            popup.style.display = "block";
+
+            // Espera 1 segundo antes de mover el botón
+            setTimeout(() => {
+                popup.style.display = "none"; // Oculta la imagen
+                let x = Math.random() * (window.innerWidth - 100);
+                let y = Math.random() * (window.innerHeight - 50);
+                btn.style.left = `${x}px`;
+                btn.style.top = `${y}px`;
+            }, 1000);
+        }
+
+        function createHearts() {
+            const heartsContainer = document.querySelector(".hearts");
+            for (let i = 0; i < 30; i++) {
+                let heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        createHearts();
+    </script>
+</body>
+</html>
